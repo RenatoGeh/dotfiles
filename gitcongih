@@ -1,0 +1,7 @@
+[user]
+	name = Renato Lui Geh
+	email = renatogeh@gmail.com
+[push]
+	default = simple
+[alias]
+	graph = log --graph --oneline --decorate
