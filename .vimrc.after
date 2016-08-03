@@ -1,0 +1,107 @@
+syntax enable
+
+set colorcolumn=100
+
+set showcmd
+set showmatch
+set showmode
+
+
+" Neovim change
+"set t_Co=8
+
+" colorscheme tango2
+" colorscheme wombat256mod
+" colorscheme cleanphp
+" colorscheme darkblue2
+colorscheme freya
+
+" Neovim ESC issues.
+"if ! has('gui_running')
+    "set ttimeoutlen=10
+    "augroup FastEscape
+        "autocmd!
+        "au InsertEnter * set timeoutlen=0
+        "au InsertLeave * set timeoutlen=1000
+    "augroup END
+"endif
+
+"set nottimeout
+
+" Neovim change
+"set encoding=utf-8
+
+set guifont=Sauce\ Code\ Powerline\ Regular
+let g:airline_powerline_fonts=1
+
+" Sets syntastic to use C++0x/11"
+let g:syntastic_cpp_compiler_options = ' -std=c++11'
+
+" Sets airline symbols
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+let g:airline_left_sep = '»'
+let g:airline_left_sep = ''
+let g:airline_right_sep = '«'
+let g:airline_right_sep = ''
+let g:airline_symbols.crypt = '<U+1F512>'
+"let g:airline_symbols.linenr = '␊'
+"let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+"let g:airline_symbols.paste = 'ρ'
+"let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#syntastic#enabled = 1
+
+let g:airline#extensions#ctrlp#color_template = 'insert'
+let g:airline#extensions#ctrlp#color_template = 'normal'
+let g:airline#extensions#ctrlp#color_template = 'visual'
+let g:airline#extensions#ctrlp#color_template = 'replace'
+
+" Tabs
+let g:airline#extensions#tabline#enabled = 2
+let g:airline#extensions#tabline#fnamemod = ":t"
+let g:airline#extensions#tabline#show_tab_type = 1
+
+" Sets :Sw as write sudo write
+command! -nargs=0 Sw w !sudo tee % > /dev/null
+
+" Tmux color fix
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
+endif
+
+" Term emulator: ESC to command mode.
+tnoremap <Esc> <C-\><C-n>
+
+" Remap Ctrl+ArrowKeys to switch buffers.
+nnoremap <C-Up> :bn<CR>
+nnoremap <C-Down> :bp<CR>
+
+" Clipboard yanking.
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+nnoremap  <leader>yy  "+yy
+
+" Clipboard pasting.
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+
+" Tabs
+set tabstop=2
+set shiftwidth=2
+set expandtab
+
