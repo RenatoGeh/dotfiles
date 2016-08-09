@@ -22,7 +22,7 @@ if [ $QUOTA ]; then
 fi
 
 # Aliases
-alias tmux="TERM=screen-256color tmux"
+alias tmux="TERM=screen-256color-bce tmux"
 alias ls='ls --color'
 alias ll='ls -la --color'
 alias feh='feh -d'
@@ -40,7 +40,7 @@ exitstatus()
 export PS1="\`if [ \$? = 0 ]; then echo \[\e[33m\]✔\[\e[0m\]; else echo \[\e[31m\]✘\[\e[0m\]; fi\`\[\033[38;5;71m\][\u|\t]\[\033[38;5;15m\]:\[\033[38;5;75m\]\w\[\033[38;5;15m\]\\$ \[$(tput sgr0)\]"
 
 #xterm colors
-export TERM='xterm-256color'
+#export TERM='xterm-256color'
 
 # Go path.
 export GOPATH=~/go

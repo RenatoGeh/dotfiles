@@ -22,8 +22,12 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-github-dashboard'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdcommenter'
+Plug 'majutsushi/tagbar'
+Plug 'edkolev/tmuxline.vim'
 
 call plug#end()
 
@@ -82,8 +86,10 @@ let g:airline_powerline_fonts=1
 " Sets syntastic to use C++0x/11"
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
-" Sets airline symbols
+" Tmuxline
+let g:airline#extensions#tmuxline#enabled = 0
 
+" Sets airline symbols
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
@@ -102,6 +108,9 @@ let g:airline_symbols.branch = '⎇'
 let g:airline_symbols.paste = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
 
+let g:airline_theme='molokai'
+
+nmap <leader>g :TagbarToggle<CR>
 
 runtime ftplugin/man.vim
 source $VIMRUNTIME/ftplugin/man.vim
