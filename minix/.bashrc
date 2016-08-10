@@ -1,24 +1,14 @@
 #!/bin/bash
 
-# Ativa o bash_completion, se estiver instalado
-if [ -f /etc/bash_completion ]; then
-	source /etc/bash_completion
-fi
-
-# Executa o ~/.bash_aliases, se existir
-if [ -f ~/.bash_aliases ]; then
-	source ~/.bash_aliases
-fi
-
 export EDITOR="vim"
 
-# Adiciona o diretório bin do usuário ao PATH
 export PATH="~/bin:$PATH"
 
 # Aliases
 alias ls='ls'
 alias ll='ls -la'
 alias less='less -R'
+alias exit='exit'
 
 exitstatus()
 {
