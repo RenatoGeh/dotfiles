@@ -19,4 +19,17 @@ let g:airline#extensions#ctrlp#color_template = 'replace'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ":t"
 let g:airline#extensions#tabline#show_tab_type = 1
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#tab_nr_type = 2
 let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#right_alt_sep = '|'
+
+" Tmuxline
+let g:airline#extensions#tmuxline#enabled = 0
+
+" Local vimrc
+let g:localvimrc_sandbox = 0
+let g:localvimrc_ask = 0

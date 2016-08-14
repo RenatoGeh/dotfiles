@@ -123,6 +123,7 @@ setopt NO_FLOW_CONTROL
 alias tmux="TERM=screen-256color tmux"
 alias ls='ls --color'
 alias ll='ls -la --color'
+alias sl='ls --color'
 alias feh='feh -d'
 alias less='less -R'
 alias vim='sh ~/Vim/nvim-session/nvim.sh'

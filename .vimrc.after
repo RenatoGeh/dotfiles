@@ -70,6 +70,9 @@ let g:airline#extensions#tabline#enabled = 2
 let g:airline#extensions#tabline#fnamemod = ":t"
 let g:airline#extensions#tabline#show_tab_type = 1
 
+" Tmuxline
+let g:airline#extensions#tmuxline#enabled = 0
+
 " Sets :Sw as write sudo write
 command! -nargs=0 Sw w !sudo tee % > /dev/null
 
@@ -105,3 +108,5 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
+" Tagbar
+nmap <leader>g :TagbarToggle<CR>
