@@ -28,6 +28,8 @@ Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'majutsushi/tagbar'
 Plug 'edkolev/tmuxline.vim'
+Plug 'tpope/vim-obsession'
+Plug 'embear/vim-localvimrc'
 
 call plug#end()
 
@@ -76,10 +78,17 @@ let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 
 " Tabs
+" Tabs
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ":t"
 let g:airline#extensions#tabline#show_tab_type = 1
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#tab_nr_type = 2
 let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#right_alt_sep = '|'
 
 let g:airline_powerline_fonts=1
 
@@ -109,6 +118,10 @@ let g:airline_symbols.paste = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
 
 let g:airline_theme='molokai'
+
+" Local vimrc
+let g:localvimrc_sandbox = 0
+let g:localvimrc_ask = 0
 
 nmap <leader>g :TagbarToggle<CR>
 
