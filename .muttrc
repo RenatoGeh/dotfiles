@@ -1,0 +1,51 @@
+set editor = 'nvim + -c "set textwidth=72" -c "set wrap"'
+
+# Fix special characters.
+charset-hook ^us-ascii$ cp1252
+charset-hook ^iso-8859-1$ cp1252
+set assumed_charset="cp1252"
+set send_charset="utf-8"
+
+set beep_new = yes
+set timeout = 10
+
+# View HTML emails and PDF correctly.
+set mailcap_path = ~/.mutt/mailcap
+auto_view text/html application/pdf
+alternative_order text/plain text/enriched text/html
+
+set realname = "Your Full Name"
+set imap_user = "username"
+set imap_pass = secret
+set smtp_url = "smtp://username@smtp.gmail.com:587/"
+set smtp_pass = secret
+set spoolfile = imaps://imap.gmail.com:993/INBOX
+set folder = "imaps://imap.gmail.com:993"
+set record = "+[Gmail]/Sent Mail"
+
+# Where to save drafts.
+set postponed = "+[Gmail]/Drafts"
+
+set certificate_file = ~/.mutt/certificates
+set header_cache = "~/.mutt/cache/headers"
+set message_cachedir = "~/.mutt/cache/bodies"
+
+set ssl_starttls = yes
+set ssl_force_tls = yes
+
+set imap_check_subscribed
+
+# Open new imap connection automatically.
+unset imap_passive
+
+# Keeps imap connection alive (time in seconds).
+set imap_keepalive = 300
+
+# Checks for new mail (time in seconds).
+set mail_check = 60
+
+set text_flowed = yes
+
+hdr_order Date From To Cc Bcc Subject X-Mailer User-Agent Organization List-Id X-PGP-Key
+
+source ~/.mutt/vombatidae.mutt

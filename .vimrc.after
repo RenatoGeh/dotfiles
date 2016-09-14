@@ -110,3 +110,26 @@ set expandtab
 
 " Tagbar
 nmap <leader>g :TagbarToggle<CR>
+
+" Visual block
+nnoremap q <c-v>
+
+" Mutt text flow
+setlocal fo+=aw
+
+" Edit multiple files.
+command! -complete=file -nargs=+ Edit call s:ETW('edit', <f-args>)
+command! -complete=file -nargs=+ Evs call s:ETW('vnew', <f-args>)
+command! -complete=file -nargs=+ Esplit call s:ETW('new', <f-args>)
+function! s:ETW(what, ...)
+  for f1 in a:000
+    let files = glob(f1)
+    if files == ''
+      execute a:what . ' ' . escape(f1, '\ "')
+    else
+      for f2 in split(files, "\n")
+        execute a:what . ' ' . escape(f2, '\ "')
+      endfor
+    endif
+  endfor
+endfunction

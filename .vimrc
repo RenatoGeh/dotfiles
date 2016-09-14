@@ -15,9 +15,14 @@ Plug 'https://github.com/xolox/vim-misc.git'
 Plug 'https://github.com/xolox/vim-colorscheme-switcher.git'
 " Vim-obsession (session saver).
 Plug 'https://github.com/tpope/vim-obsession.git'
-
-" Tabline
-"Plug 'https://github.com/mkitt/tabline.vim.git'
+" Tagbar
+Plug 'https://github.com/majutsushi/tagbar.git'
+" Tmuxline
+Plug 'https://github.com/edkolev/tmuxline.vim.git'
+" Promptline
+Plug 'https://github.com/edkolev/promptline.vim.git'
+" Localvimrc
+Plug 'https://github.com/embear/vim-localvimrc.git'
 
 call plug#end()
 
