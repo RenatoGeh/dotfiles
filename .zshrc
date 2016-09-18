@@ -127,6 +127,7 @@ alias sl='ls --color'
 alias feh='feh -d'
 alias less='less -R'
 alias vim='sh ~/Vim/nvim-session/nvim.sh'
+alias wcal="cal -y && when"
 
 # Less syntax highlighting.
 export LESS=' -R'
