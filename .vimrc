@@ -23,6 +23,12 @@ Plug 'https://github.com/edkolev/tmuxline.vim.git'
 Plug 'https://github.com/edkolev/promptline.vim.git'
 " Localvimrc
 Plug 'https://github.com/embear/vim-localvimrc.git'
+" Tender colorscheme
+Plug 'jacoborus/tender'
+" Deoplete
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins' }
+" Neomake
+Plug 'neomake/neomake'
 
 call plug#end()
 

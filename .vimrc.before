@@ -6,6 +6,8 @@ set expandtab
 " Auto refresh
 set autoread
 
+"set termguicolors
+
 " Airline stuff.
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
@@ -33,3 +35,6 @@ let g:airline#extensions#tmuxline#enabled = 0
 " Local vimrc
 let g:localvimrc_sandbox = 0
 let g:localvimrc_ask = 0
+
+" Disable syntastic (over Neomake)
+call janus#disable_plugin('syntastic')

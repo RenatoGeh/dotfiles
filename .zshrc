@@ -152,7 +152,7 @@ export PATH="$PATH:$RUBYPATH/bin"
 
 # Colored man pages
 #export PAGER="most"
-export LESS="--RAW-CONTROL-CHARS"
+export LESS="--ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --window=-4"
 [[ -f ~/.LESS_TERMCAP ]] && . ~/.LESS_TERMCAP
 
 # Syntax highlighting.
