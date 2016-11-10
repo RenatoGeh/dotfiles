@@ -182,8 +182,12 @@ bindsym $mod+shift+x exec ~/.xlock/lock.sh --color "$bg-color"
 
 # Always runs terminal and chromium on startup and restart.
 # exec urxvt -e bash -c "tmux -q has-session && exec tmux attach-session -d || exec tmux new-session -n$USER -s$USER@$HOSTNAME"
-exec urxvt -e zsh -c "tmux attach"
-exec i3-msg 'workspace 2; exec chromium; workspace 1'
+#exec urxvt -e zsh -c "tmux attach"
+exec i3-msg 'workspace 1; exec urxvt -e zsh -c "tmux"; workspace 10; exec urxvt -e zsh -c "tmux"; workspace 1;'
+#exec --no-startup-id i3-msg 'workspace 2; exec chromium; workspace 1'
+assign [class="chromium"] workspace 2
+assign [class="Chromium"] workspace 2
+exec chromium
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
@@ -242,7 +246,7 @@ exec compton -f
 exec_always sh /home/renatogeh/.fehbg.sh
 
 # Keyboard layout switcher
-exec_always setxkbmap -option grp:switch,grp:alt_shift_toggle us,br
+exec_always setxkbmap -option grp:switch,grp:alt_shift_toggle us,br #,ru
 
 # Reload Xdefaults
 exec_always xrdb /home/renatogeh/.Xdefaults
