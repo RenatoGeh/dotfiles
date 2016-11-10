@@ -119,6 +119,8 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
+set autoread
+
 " Breakline at 100
 set textwidth=99
 
@@ -142,7 +144,9 @@ nnoremap q <c-v>
 "setlocal fo+=aw
 
 " Deoplete
+set runtimepath+=~/.vim/plugged/deoplete.nvim/
 let g:deoplete#enable_at_startup = 1
+autocmd VimEnter * call deoplete#initialize()
 
 " Neomake
 autocmd! BufWritePost * Neomake

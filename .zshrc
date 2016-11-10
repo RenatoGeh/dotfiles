@@ -158,6 +158,9 @@ export LESS="--ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --H
 # Syntax highlighting.
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Suggestions
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # Rehashes automatically.
 zstyle ':completion:*' rehash true
 
