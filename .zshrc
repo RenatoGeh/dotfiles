@@ -130,7 +130,7 @@ alias vim='sh ~/Vim/nvim-session/nvim.sh'
 alias wcal="cal -y && when"
 
 # Less syntax highlighting.
-export LESS=' -R'
+export LESS=' -R -N'
 export LESSOPEN='|~/.lessfilter %s'
 export LESSCHARSET='utf-8'
 
@@ -152,7 +152,7 @@ export PATH="$PATH:$RUBYPATH/bin"
 
 # Colored man pages
 #export PAGER="most"
-export LESS="--ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --window=-4"
+export LESS="--ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --window=-4 -R -N"
 [[ -f ~/.LESS_TERMCAP ]] && . ~/.LESS_TERMCAP
 
 # Syntax highlighting.
@@ -175,6 +175,15 @@ source /usr/share/doc/pkgfile/command-not-found.zsh
 # Allows background running.
 setopt NO_HUP
 
+# Command time format
+TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
+'avg shared (code):         %X KB'$'\n'\
+'avg unshared (data/stack): %D KB'$'\n'\
+'total (sum):               %K KB'$'\n'\
+'max memory:                %M MB'$'\n'\
+'page faults from disk:     %F'$'\n'\
+'other page faults:         %R'
+
 key[Insert]=${terminfo[kich1]}
 
 [[ -n ${key[Backspace]} ]] && bindkey "${key[Backspace]}" backward-delete-char
@@ -188,6 +197,37 @@ key[Insert]=${terminfo[kich1]}
 [[ -n ${key[Left]} ]] && bindkey "${key[Left]}" backward-char
 [[ -n ${key[Down]} ]] && bindkey "${key[Down]}" down-line-or-search
 [[ -n ${key[Right]} ]] && bindkey "${key[Right]}" forward-char
+
+# Powerlevel9k
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(time context dir)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vi_mode vcs)
+#POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+#POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+POWERLEVEL9K_TIME_FOREGROUND='black'
+POWERLEVEL9K_TIME_BACKGROUND='154'
+POWERLEVEL9K_DIR_HOME_FOREGROUND='white'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='white'
+POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='white'
+#POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=" "
+#POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
+#POWERLEVEL9K_DIR_HOME_BACKGROUND='154'
+#POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='154'
+
+# zplug
+source ~/.zplug/init.zsh
+
+zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check; then
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
+fi
+
+# Then, source plugins and add commands to $PATH
+zplug load
 
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
