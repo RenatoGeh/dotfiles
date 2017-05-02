@@ -134,14 +134,30 @@ set wildmenu
 " Gundo
 nnoremap <leader>u :GundoToggle<CR>
 
+" Persistent undos
+set noswapfile
+set nobackup
+set nowritebackup
+if !&diff
+  set undodir=~/.vim/undodir
+  set undofile
+endif
+
 " Tagbar
 nmap <leader>g :TagbarToggle<CR>
 
 " Visual block
 nnoremap q <c-v>
 
+" Disable Rubocop for Neomake.
+  "return ['mri', 'rubocop', 'reek', 'rubylint']
+let g:neomake_ruby_enabled_makers = ['mri']
+
 " Mutt text flow
 "setlocal fo+=aw
+
+" Syntax highlighting for faq-script.
+au BufNewFile,BufRead *.faq set filetype=markdown
 
 " Deoplete
 set runtimepath+=~/.vim/plugged/deoplete.nvim/
@@ -178,3 +194,12 @@ endfunction
 command! -range VS call setpos('.', [0,<line1>,0,0]) |
                     \ exe "normal V" |
                     \ call setpos('.', [0,<line2>,0,0])
+
+" Startify + NERDTree
+autocmd VimEnter *
+                \   if !argc()
+                \ |   Startify
+                \ |   NERDTree
+                \ |   wincmd w
+                \ | endif
+
