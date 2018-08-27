@@ -46,6 +46,10 @@ set_prompt_update() {
 RPROMPT="%{$fg[red]%}\$vcs_info_msg_0_  %{$fg[yellow]%}%B> [%i->%?]%b%{$reset_color%}"
 TMOUT=1
 
+TRAPWINCH() {
+  zle && { zle reset-prompt; zle -R }
+}
+
 TRAPALRM() {
   if [ "$WIDGET" != "expand-or-complete" ]; then
     zle reset-prompt
@@ -128,6 +132,17 @@ alias feh='feh -d'
 alias less='less -R'
 alias vim='sh ~/Vim/nvim-session/nvim.sh'
 alias wcal="cal -y && when"
+alias go-bundle="~/go/bin/bundle"
+#alias start-rvm="source ~/.rvm/scripts/rvm"
+alias tree='tree -C'
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias playmidi='fluidsynth -a alsa -m alsa_seq -l -i /usr/share/soundfonts/FluidR3_GM.sf2'
+alias scrot='scrot /tmp/%F-%X_\$wx\$h.png'
+
+alias spot-pp='playerctl -p spotify play-pause'
+alias spot-next='playerctl -p spotify next'
+alias spot-prev='playerctl -p spotify previous'
 
 # Less syntax highlighting.
 export LESS=' -R -N'
@@ -147,8 +162,9 @@ export PATH="$PATH:$GOPATH/bin"
 export PATH="/usr/share/perl5/vendor_perl/auto/share/dist/Cope:$PATH"
 
 # Ruby path.
-export RUBYPATH=~/.gem/ruby/2.3.0
+export RUBYPATH=`ruby -e 'puts Gem.user_dir'`
 export PATH="$PATH:$RUBYPATH/bin"
+alias rb-bundle="$RUBYPATH/bin/bundle"
 
 # Colored man pages
 #export PAGER="most"
@@ -216,7 +232,12 @@ POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='white'
 # zplug
 source ~/.zplug/init.zsh
 
+# Powerlevel9k
 zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+
+# calc.plugin.zsh
+zplug "arzzen/calc.plugin.zsh", use:calc.plugin.zsh
+alias ccalc=/usr/bin/calc
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check; then
@@ -236,3 +257,6 @@ HISTSIZE=1000
 SAVEHIST=1000
 bindkey -v
 # End of lines configured by zsh-newuser-install
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+#export PATH="$PATH:$HOME/.rvm/bin"

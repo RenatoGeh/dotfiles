@@ -16,6 +16,7 @@ set showmode
 " colorscheme cleanphp
 " colorscheme darkblue2
 colorscheme freya
+let g:colorscheme_switcher_define_mappings = 0
 "colorscheme tender
 
 "let g:tender_airline = 1
@@ -119,6 +120,9 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
+" Scroll offset
+set scrolloff=10
+
 set autoread
 
 " Breakline at 100
@@ -158,11 +162,13 @@ let g:neomake_ruby_enabled_makers = ['mri']
 
 " Syntax highlighting for faq-script.
 au BufNewFile,BufRead *.faq set filetype=markdown
+" Syntax highlighting for SageMath.
+augroup filetypedetect
+  au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
+augroup END
 
 " Deoplete
-set runtimepath+=~/.vim/plugged/deoplete.nvim/
 let g:deoplete#enable_at_startup = 1
-autocmd VimEnter * call deoplete#initialize()
 
 " Neomake
 autocmd! BufWritePost * Neomake
@@ -173,6 +179,9 @@ let g:neomake_open_list = 2
       "\ 'errorformat': '%f:%l:%c: %m',
       "\ }
 let g:neomake_tex_enabled_makers = ['chktex']
+
+" LaTeX Live Preview
+let g:livepreview_previewer = 'zathura'
 
 " Edit multiple files.
 command! -complete=file -nargs=+ Edit call s:ETW('edit', <f-args>)

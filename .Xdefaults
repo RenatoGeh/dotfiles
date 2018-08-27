@@ -14,8 +14,10 @@ URxvt*geometry:                115x40
 !URxvt*font: xft:Inconsolata:pixelsize=14:antialias=true:hinting=true
 !URxvt*boldFont: xft:Inconsolata:bold:pixelsize=14:antialias=false:hinting=true
 !URxvt*boldFont: xft:Liberation Mono:bold:pixelsize=14:antialias=false:hinting=true
-URxvt*font: xft:DejaVu Sans Mono for Powerline:pixelsize=14:antialias=true:hinting=true
-URxvt*boldFont: xft:DejaVu Sans Mono for Powerline:bold:pixelsize=14:antialias=false:hinting=true
+!URxvt*font: xft:DejaVu Sans Mono for Powerline:pixelsize=14:antialias=true:hinting=true
+!URxvt*boldFont: xft:DejaVu Sans Mono for Powerline:bold:pixelsize=14:antialias=false:hinting=true
+URxvt*font:-*-terminesspowerline-medium-r-normal-*-16-*-*-*-*-*-iso10646-*
+URxvt*boldFont:-*-terminesspowerline-bold-r-normal-*-16-*-*-*-*-*-iso10646-*
 ! Tries to solve the underline issue with DejaVu 14 point.
 URxvt.lineSpace: 1
 URxvt*depth:                24
@@ -24,6 +26,8 @@ URxvt*scrollBar:            false
 URxvt*saveLines:  2000
 URxvt.transparent:      true
 URxvt*.shading: 20
+
+!URxvt*.internalBorder: 0
 
 ! Meta modifier for keybindings
 !URxvt.modifier: super
