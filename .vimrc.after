@@ -121,7 +121,7 @@ set shiftwidth=2
 set expandtab
 
 " Scroll offset
-set scrolloff=10
+set scrolloff=5
 
 set autoread
 
@@ -161,11 +161,11 @@ let g:neomake_ruby_enabled_makers = ['mri']
 "setlocal fo+=aw
 
 " Syntax highlighting for faq-script.
-au BufNewFile,BufRead *.faq set filetype=markdown
+"au BufNewFile,BufRead *.faq set filetype=markdown
 " Syntax highlighting for SageMath.
-augroup filetypedetect
-  au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
-augroup END
+"augroup filetypedetect
+  "au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
+"augroup END
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
@@ -173,15 +173,65 @@ let g:deoplete#enable_at_startup = 1
 " Neomake
 autocmd! BufWritePost * Neomake
 let g:neomake_open_list = 2
-"let g:neomake_chktex_maker = {
-      "\ 'exe': 'chktex',
-      "\ 'args': ['-l ~/Vim/neomake/chktexrc.local'],
-      "\ 'errorformat': '%f:%l:%c: %m',
-      "\ }
+let g:neomake_chktex_maker = {
+      \ 'exe': 'chktex',
+      \ 'args': ['-l ~/Vim/neomake/chktexrc.local', '-n 18'],
+      \ 'errorformat': '%f:%l:%c: %m',
+      \ }
 let g:neomake_tex_enabled_makers = ['chktex']
+" Gets rid of annoying 'no test files' warning.
+let g:neomake_go_maker = {
+  \ 'args': [
+      \ '-c',
+      \ '-o', g:neomake#compat#dev_null,
+  \ ],
+  \ 'append_file': 0,
+  \ 'cwd': '%:h',
+  \ 'serialize': 1,
+  \ 'serialize_abort_on_error': 1,
+  \ 'errorformat':
+      \ '%W%f:%l: warning: %m,' .
+      \ '%E%f:%l:%c:%m,' .
+      \ '%E%f:%l:%m,' .
+      \ '%C%\s%\+%m,' .
+      \ '%-G#%.%#',
+  \ 'postprocess': function('neomake#postprocess#compress_whitespace'),
+  \ }
 
 " LaTeX Live Preview
 let g:livepreview_previewer = 'zathura'
+
+" GoMetaLinter
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+
+" Hard tabs on Makefiles.
+@neovim.autocmd FileType make setlocal noexpandtab
+@neovim.autocmd BufNewFile,BufRead Makefile setlocal noexpandtab
+
+" Disable LaTeX-Box for use with vim-tex.
+let g:polyglot_disabled = ['latex']
+
+" vim-tex neovim support.
+let g:vimtex_compiler_progname = 'nvr'
+
+" vim-tex previewer with zathura.
+let g:vimtex_view_method = 'zathura'
+let g:vimtex_view_use_temp_files = 1
+
+" vim-tex disable warnings.
+let g:vimtex_quickfix_latexlog = {'default' : 0}
+
+" vim-tex shell escape.
+let g:vimtex_compiler_latexmk = {
+      \ 'options' : [
+      \ '-pdf',
+      \ '-shell-escape',
+      \ '-verbose',
+      \ '-file-line-error',
+      \ '-synctex=1',
+      \ '-interaction=nonstopmode',
+      \ ],
+      \ }
 
 " Edit multiple files.
 command! -complete=file -nargs=+ Edit call s:ETW('edit', <f-args>)
