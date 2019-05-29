@@ -190,18 +190,17 @@ bindsym $mod+k exec /usr/local/bin/spot-pp
 # Always runs terminal and chromium on startup and restart.
 # exec urxvt -e bash -c "tmux -q has-session && exec tmux attach-session -d || exec tmux new-session -n$USER -s$USER@$HOSTNAME"
 #exec urxvt -e zsh -c "tmux attach"
-exec i3-msg 'workspace 1; exec urxvt -e zsh -c "tmux"; workspace 1;'
-#exec --no-startup-id i3-msg 'workspace 2; exec chromium; workspace 1'
-assign [class="chromium"] workspace 2
-assign [class="Chromium"] workspace 2
-exec chromium
+exec --no-startup-id i3-msg 'workspace 1; exec urxvt -e zsh -c "tmux"'
+exec --no-startup-id i3-msg 'workspace 2; exec chromium'
+#assign [class="chromium"] workspace 2
+#assign [class="Chromium"] workspace 2
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
 
 # Run dialog
 # bindsym $mod+d exec rofi -show run -lines 10 -eh 2 -width 100 -padding 450 -opacity "95" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
-bindsym $mod+d exec rofi -show run -lines 30 -columns 3 -eh 1 -width 70 -opacity "95" -matching fuzzy
+bindsym $mod+d exec rofi -run-command "/bin/zsh -i -c '{cmd}'" -show run -lines 30 -columns 3 -eh 1 -width 70 -opacity 95 -matching fuzzy
 # Window switcher
 # bindsym $mod+Tab exec rofi -show window -lines 10 -eh 2 -width 100 -padding 450 -opacity "95" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
 bindsym $mod+Tab exec rofi -show window -lines 10 -eh 1 -width 50 -opacity "95" -matching fuzzy

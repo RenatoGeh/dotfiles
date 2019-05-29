@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+#font pango:monospace 9
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -39,10 +39,10 @@ bindsym $mod+Shift+Return exec urxvt -e zsh -c "tmux attach"
 bindsym $mod+Shift+q kill
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+#bindsym $mod+j focus left
+#bindsym $mod+k focus down
+#bindsym $mod+l focus up
+#bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -152,7 +152,7 @@ new_window none
 hide_edge_borders both
 
 # Changes font.
-font pango:DejaVu Sans Mono 8
+font pango:DejaVu Sans Mono 10
 
 set $bg-color            #2f343f
 set $inactive-bg-color   #2f343f
@@ -165,7 +165,9 @@ set $urgent-bg-color     #E53935
 bar {
   status_command i3blocks -c ~/.i3/i3blocks.conf
   tray_output primary
-  font pango:DejaVu Sans Mono 10
+  #font pango:terminesspowerline 12
+  #font pango:Terminess Powerline Bold 10
+  font -*-terminesspowerline-bold-r-normal-*-16-*-*-*-*-*-iso10646-*
 
   colors {
     background $bg-color
@@ -180,20 +182,29 @@ bar {
 # Shortcut to i3lock.
 bindsym $mod+shift+x exec ~/.xlock/lock.sh --color "$bg-color"
 
+# Shotcuts for Spotify.
+bindsym $mod+j exec /usr/local/bin/spot-prev
+bindsym $mod+l exec /usr/local/bin/spot-next
+bindsym $mod+k exec /usr/local/bin/spot-pp
+
 # Always runs terminal and chromium on startup and restart.
 # exec urxvt -e bash -c "tmux -q has-session && exec tmux attach-session -d || exec tmux new-session -n$USER -s$USER@$HOSTNAME"
-exec urxvt -e zsh -c "tmux attach"
-exec i3-msg 'workspace 2; exec chromium; workspace 1'
+#exec urxvt -e zsh -c "tmux attach"
+exec i3-msg 'workspace 1; exec urxvt -e zsh -c "tmux"; workspace 1;'
+#exec --no-startup-id i3-msg 'workspace 2; exec chromium; workspace 1'
+assign [class="chromium"] workspace 2
+assign [class="Chromium"] workspace 2
+exec chromium
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
 
 # Run dialog
 # bindsym $mod+d exec rofi -show run -lines 10 -eh 2 -width 100 -padding 450 -opacity "95" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
-bindsym $mod+d exec rofi -show run -lines 10 -columns 2 -eh 2 -width 100 -padding 450 -opacity "95" -font "System San Francisco Display 18"
+bindsym $mod+d exec rofi -show run -lines 30 -columns 3 -eh 1 -width 70 -opacity "95" -matching fuzzy
 # Window switcher
 # bindsym $mod+Tab exec rofi -show window -lines 10 -eh 2 -width 100 -padding 450 -opacity "95" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
-bindsym $mod+Tab exec rofi -show window -lines 10 -eh 2 -width 100 -padding 450 -opacity "95" -font "System San Francisco Display 18"
+bindsym $mod+Tab exec rofi -show window -lines 10 -eh 1 -width 50 -opacity "95" -matching fuzzy
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -230,10 +241,10 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightne
 bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
 
 # Media player controls
-bindsym XF86AudioPlay exec cmus-remote --play
-bindsym XF86AudioPause exec cmus-remote --pause
-bindsym XF86AudioNext exec cmus-remote --next && killall -USR1 i3blocks
-bindsym XF86AudioPrev exec cmus-remote --prev && killall -USR1 i3blocks
+bindsym XF86AudioPlay exec bash /home/renatogeh/.i3/mediactl_play.sh
+bindsym XF86AudioPause exec bash /home/renatogeh/.i3/mediactl_pause.sh
+bindsym XF86AudioNext exec bash /home/renatogeh/.i3/mediactl_next.sh
+bindsym XF86AudioPrev exec bash /home/renatogeh/.i3/mediactl_prev.sh
 
 # Transparent windows
 exec compton -f
@@ -242,10 +253,51 @@ exec compton -f
 exec_always sh /home/renatogeh/.fehbg.sh
 
 # Keyboard layout switcher
-exec_always setxkbmap -option grp:switch,grp:alt_shift_toggle us,br
+exec_always setxkbmap -option grp:switch,grp:alt_shift_toggle us,br #,ru
 
 # Reload Xdefaults
 exec_always xrdb /home/renatogeh/.Xdefaults
 
 # HDMI1 output to Workspace 9.
 workspace 9 output HDMI1
+
+# i3-gaps config
+#set $mode_gaps Gaps: (o) outer, (i) inner
+#set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+#set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+#bindsym $mod+Shift+g mode "$mode_gaps"
+
+#mode "$mode_gaps" {
+        #bindsym o      mode "$mode_gaps_outer"
+        #bindsym i      mode "$mode_gaps_inner"
+        #bindsym Return mode "default"
+        #bindsym Escape mode "default"
+#}
+
+#mode "$mode_gaps_inner" {
+        #bindsym plus  gaps inner current plus 5
+        #bindsym minus gaps inner current minus 5
+        #bindsym 0     gaps inner current set 0
+
+        #bindsym Shift+plus  gaps inner all plus 5
+        #bindsym Shift+minus gaps inner all minus 5
+        #bindsym Shift+0     gaps inner all set 0
+
+        #bindsym Return mode "default"
+        #bindsym Escape mode "default"
+#}
+#mode "$mode_gaps_outer" {
+        #bindsym plus  gaps outer current plus 5
+        #bindsym minus gaps outer current minus 5
+        #bindsym 0     gaps outer current set 0
+
+        #bindsym Shift+plus  gaps outer all plus 5
+        #bindsym Shift+minus gaps outer all minus 5
+        #bindsym Shift+0     gaps outer all set 0
+
+        #bindsym Return mode "default"
+        #bindsym Escape mode "default"
+#}
+
+#smart_gaps on
+#smart_borders on

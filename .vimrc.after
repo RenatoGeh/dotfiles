@@ -41,7 +41,7 @@ set guifont=Sauce\ Code\ Powerline\ Regular
 let g:airline_powerline_fonts=1
 
 " Sets syntastic to use C++0x/11"
-let g:syntastic_cpp_compiler_options = ' -std=c++11'
+"let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
 " Sets airline symbols
 
@@ -82,7 +82,7 @@ let g:airline#extensions#tabline#show_tab_type = 1
 let g:airline#extensions#tmuxline#enabled = 0
 
 " Sets :Sw as write sudo write
-command! -nargs=0 Sw w !sudo tee % > /dev/null
+command! -nargs=0 Sw w suda://%
 
 " Tmux color fix
 if &term =~ '256color'
@@ -116,8 +116,9 @@ nnoremap B ^
 nnoremap E $
 
 " Tabs
-set tabstop=2
-set shiftwidth=2
+au FileType * set softtabstop=2
+au FileType * set tabstop=2
+au FileType * set shiftwidth=2
 set expandtab
 
 " Scroll offset
@@ -131,6 +132,8 @@ set textwidth=99
 " Cursor line
 set cursorline
 hi CursorLine term=bold cterm=bold
+"set cursorcolumn
+"hi CursorColumn term=bold cterm=bold
 
 " Autocomplete for normal mode
 set wildmenu
@@ -169,9 +172,11 @@ let g:neomake_ruby_enabled_makers = ['mri']
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
+call deoplete#enable()
 
 " Neomake
-autocmd! BufWritePost * Neomake
+"autocmd! BufWritePost * Neomake
+call neomake#configure#automake('w')
 let g:neomake_open_list = 2
 let g:neomake_chktex_maker = {
       \ 'exe': 'chktex',
@@ -180,29 +185,37 @@ let g:neomake_chktex_maker = {
       \ }
 let g:neomake_tex_enabled_makers = ['chktex']
 " Gets rid of annoying 'no test files' warning.
-let g:neomake_go_maker = {
-  \ 'args': [
-      \ '-c',
-      \ '-o', g:neomake#compat#dev_null,
-  \ ],
-  \ 'append_file': 0,
-  \ 'cwd': '%:h',
-  \ 'serialize': 1,
-  \ 'serialize_abort_on_error': 1,
-  \ 'errorformat':
-      \ '%W%f:%l: warning: %m,' .
-      \ '%E%f:%l:%c:%m,' .
-      \ '%E%f:%l:%m,' .
-      \ '%C%\s%\+%m,' .
-      \ '%-G#%.%#',
-  \ 'postprocess': function('neomake#postprocess#compress_whitespace'),
-  \ }
+"let g:neomake_go_maker = {
+  "\ 'args': [
+      "\ '-c',
+  "\ ],
+  "\ 'append_file': 0,
+  "\ 'cwd': '%:h',
+  "\ 'serialize': 1,
+  "\ 'serialize_abort_on_error': 1,
+  "\ 'errorformat':
+      "\ '%W%f:%l: warning: %m,' .
+      "\ '%E%f:%l:%c:%m,' .
+      "\ '%E%f:%l:%m,' .
+      "\ '%C%\s%\+%m,' .
+      "\ '%-G#%.%#',
+  "\ 'postprocess': function('neomake#postprocess#compress_whitespace'),
+  "\ }
+
+" C
+let g:neomake_c_enabled_makers = ['gcc']
+let g:neomake_c_gcc_args = ['-Wextra', '-Wall']
+"let g:neomake_c_clangtidy_args = ['--']
+
+" C++
+let g:neomake_cpp_enabled_makers = ['gcc']
+let g:neomake_cpp_gcc_args = ['-Wextra', '-Wall']
 
 " LaTeX Live Preview
 let g:livepreview_previewer = 'zathura'
 
 " GoMetaLinter
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:neomake_go_enabled_makers = ['go']
 
 " Hard tabs on Makefiles.
 @neovim.autocmd FileType make setlocal noexpandtab
@@ -210,6 +223,31 @@ let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 
 " Disable LaTeX-Box for use with vim-tex.
 let g:polyglot_disabled = ['latex']
+
+" C++ completion
+au BufNewFile,BufRead,BufEnter *.cpp,*.hpp,*.cc,*.hh set omnifunc=omni#cpp#complete#Main
+set tags+=~/.vim/tags/cpp
+set tags+=~/.vim/tags/gl
+set tags+=~/.vim/tags/sdl
+set tags+=~/.vim/tags/qt4
+set tags+=~/.vim/tags/boost
+set tags+=~/.vim/tags/curl
+set tags+=~/.vim/tags/libircclient
+set tags+=~/.vim/tags/libxml2
+map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extras=+q .<CR>
+
+" OmniCppComplete
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
 
 " vim-tex neovim support.
 let g:vimtex_compiler_progname = 'nvr'
@@ -232,6 +270,13 @@ let g:vimtex_compiler_latexmk = {
       \ '-interaction=nonstopmode',
       \ ],
       \ }
+
+" vim-tex misc
+let g:tex_flavor='latex'
+let g:vimtex_quickfix_mode=2
+
+" Email format
+au FileType email set textwidth=60
 
 " Edit multiple files.
 command! -complete=file -nargs=+ Edit call s:ETW('edit', <f-args>)
