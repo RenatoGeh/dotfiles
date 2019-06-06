@@ -18,9 +18,13 @@
 # Option 3.
 ICON=$HOME/.xlock/alt-icon.png
 TMPBG=/tmp/__screen.png
-LOCK=~/.xlock/alt-icon.png
+#LOCK=~/.xlock/alt-icon.png
 scrot $TMPBG
 convert $TMPBG -scale 10% -scale 1000% $TMPBG
-convert $TMPBG $ICON -gravity center -composite -matte $TMPBG
-i3lock -i $TMPBG
+convert "$TMPBG" "$ICON" -gravity center -composite -matte "$TMPBG"
+# Pause dunst
+killall -SIGUSR1 dunst -v
+i3lock -i $TMPBG --nofork
+# Resume dunst
+killall -SIGUSR2 dunst -v
 
