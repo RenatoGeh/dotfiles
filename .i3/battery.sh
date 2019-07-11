@@ -5,12 +5,18 @@
 
 CHG="Battery charging."
 
-while read line
+while read -r line
 do
   if [ -z "$line" ]
   then
-    echo $CHG
+    echo "$CHG"
   else
-    echo $line
+    echo "$line"
+  fi
+  p=$( echo "$line" | grep -o "[0-9]\+\%" )
+  p=${p::-1}
+  if ([[ "$p" -eq '30' ]] || [[ "$p" -eq '20' ]] || [[ "$p" -le '10' ]]) && [ ! -f /tmp/bat_$p ]; then
+    touch > /tmp/bat_$p
+    dunstify -a 'Battery' "Battery level: $p%"
   fi
 done
