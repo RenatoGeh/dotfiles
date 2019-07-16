@@ -1,0 +1,4 @@
+#!/bin/bash
+
+playerctl -p spotify next
+playerctl -p spotify next
