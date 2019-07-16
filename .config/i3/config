@@ -167,7 +167,8 @@ bar {
   tray_output primary
   #font pango:terminesspowerline 12
   #font pango:Terminess Powerline Bold 10
-  font -*-terminesspowerline-bold-r-normal-*-16-*-*-*-*-*-iso10646-*
+  font pango:-*-terminesspowerline-bold-r-normal-*-16-*-*-*-*-*-iso10646-* Bold 9
+  #font -*-terminesspowerline-bold-r-normal-*-16-*-*-*-*-*-iso10646-*
 
   colors {
     background $bg-color
