@@ -122,6 +122,9 @@ set imap_keepalive = 300
 # Checks for new mail (time in seconds).
 set mail_check = 60
 
+# Dusntify when new mail.
+set new_mail_command = "dunstify -a 'NeoMutt' 'New mail!'"
+
 set text_flowed = yes
 
 hdr_order Date From To Cc Bcc Subject X-Mailer User-Agent Organization List-Id X-PGP-Key

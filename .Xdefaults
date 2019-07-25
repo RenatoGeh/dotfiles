@@ -2,7 +2,7 @@
 ! urxvt
 
 !URxvt.perl-ext-common: default,tabbedex,clipboard
-URxvt.perl-ext-common: default,clipboard
+URxvt.perl-ext-common: default,clipboard,url-select,keyboard-select
 
 ! tabbedex
 
@@ -16,16 +16,22 @@ URxvt*geometry:                115x40
 !URxvt*boldFont: xft:Liberation Mono:bold:pixelsize=14:antialias=false:hinting=true
 !URxvt*font: xft:DejaVu Sans Mono for Powerline:pixelsize=14:antialias=true:hinting=true
 !URxvt*boldFont: xft:DejaVu Sans Mono for Powerline:bold:pixelsize=14:antialias=false:hinting=true
+
 URxvt*font:-*-terminesspowerline-medium-r-normal-*-16-*-*-*-*-*-iso10646-*
 URxvt*boldFont:-*-terminesspowerline-bold-r-normal-*-16-*-*-*-*-*-iso10646-*
+
+! NOTE TO SELF: Must be multiple of 8 for some odd reason
+!URxvt*font:-*-terminesspowerline-medium-r-normal-*-32-*-*-*-*-*-iso10646-*
+!URxvt*boldFont:-*-terminesspowerline-bold-r-normal-*-32-*-*-*-*-*-iso10646-*
+
 ! Tries to solve the underline issue with DejaVu 14 point.
-URxvt.lineSpace: 1
-URxvt*depth:                24
-URxvt*borderless: 1
-URxvt*scrollBar:            false
-URxvt*saveLines:  2000
-URxvt.transparent:      true
-URxvt*.shading: 20
+URxvt.lineSpace:    1
+URxvt*depth:        24
+URxvt*borderless:   1
+URxvt*scrollBar:    false
+URxvt*saveLines:    2000
+URxvt.transparent:  true
+URxvt*.shading:     20
 
 !URxvt*.internalBorder: 0
 
@@ -37,14 +43,19 @@ URxvt.perl-ext:             default,url-select,clipboard
 
 ! url-select (part of urxvt-perls package)
 URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
 URxvt.url-select.autocopy:  true
 URxvt.url-select.button:    2
 URxvt.url-select.launcher:  chromium
 URxvt.url-select.underline: true
+URxvt.clipboard.copycmd:    xclip -i -selection clipboard
+URxvt.clipboard.pastecmd:   xclip -o -selection clipboard
+URXvt.keyboard-select.clipboard: true
 
 ! Nastavuje kopirovani
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
-URxvt.keysym.Shift-Control-C:   perl:clipboard:copy
+URxvt.keysym.Shift-Control-C: perl:clipboard:copy
 
 ! disable the stupid ctrl+shift 'feature'
 URxvt.iso14755: false
