@@ -4,6 +4,8 @@ MAX_LEN=70
 
 # Prints spotify track information.
 
+skipped=0
+
 s=$(playerctl -p spotify status)
 if [ "$s" == "Playing" ]; then
   title=$(playerctl -p spotify metadata title)
@@ -27,5 +29,14 @@ if [ "$s" == "Playing" ]; then
     done
     #echo "${f_line}${s_line}"
     echo "$t_line"
+  fi
+
+  if [ "$title" == "Advertisement" ] || [ "$title" == "Spotify" ]; then
+    if (( ctime % 2 == 0 )) && (( skipped == 0 )); then
+      /usr/local/bin/spot-next
+      let skipped=1
+    fi
+  else
+    let skipped=0
   fi
 fi

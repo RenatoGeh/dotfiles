@@ -188,11 +188,15 @@ bindsym $mod+j exec /usr/local/bin/spot-prev
 bindsym $mod+l exec /usr/local/bin/spot-next
 bindsym $mod+k exec /usr/local/bin/spot-pp
 
+# Shortcut for screenshot.
+#bindsym $mod+p exec sleep 0.1 && scrot "/tmp/%F-%X_\$wx\$h.png" -s &> /tmp/error
+bindsym $mod+p exec maim -s /tmp/$(date +%s).png | xclip -selection c -t image/png
+
 # Always runs terminal and chromium on startup and restart.
 # exec urxvt -e bash -c "tmux -q has-session && exec tmux attach-session -d || exec tmux new-session -n$USER -s$USER@$HOSTNAME"
 #exec urxvt -e zsh -c "tmux attach"
 exec --no-startup-id i3-msg 'workspace 1; exec urxvt -e zsh -c "tmux"'
-exec --no-startup-id i3-msg 'workspace 2; exec chromium'
+exec --no-startup-id i3-msg 'workspace 2; exec firefox'
 #assign [class="chromium"] workspace 2
 #assign [class="Chromium"] workspace 2
 
@@ -223,10 +227,16 @@ workspace_auto_back_and_forth yes
 
 # increase volume
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ unmute
+# increase bluetooth volume
+bindsym Shift+XF86AudioRaiseVolume exec pactl set-sink-volume bluez_sink.40_22_00_90_03_AD.a2dp_sink +2.5%
 # decrease volume
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5%- unmute
+# decrease bluetooth volume
+bindsym Shift+XF86AudioLowerVolume exec pactl set-sink-volume bluez_sink.40_22_00_90_03_AD.a2dp_sink -2.5%
 # mute volume
 bindsym XF86AudioMute exec amixer -q set Master mute
+# mute bluetooth volume
+bindsym Shift+XF86AudioMute exec pactl set-sink-mute bluez_sink.40_22_00_90_03_AD.a2dp_sink toggle
 
 # Pulse Audio controls
 #bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound volume
