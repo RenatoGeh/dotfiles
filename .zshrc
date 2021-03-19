@@ -1,5 +1,3 @@
-# The following lines were added by compinstall
-
 zstyle ':completion:*' completer _complete _ignored _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
@@ -26,6 +24,8 @@ setopt PROMPT_SUBST
 autoload -Uz vcs_info
 precmd () { vcs_info }
 
+setopt histignorespace
+
 # Git prompt.
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
@@ -33,31 +33,11 @@ zstyle ':vcs_info:*' stagedstr '%B%[S]%b'
 zstyle ':vcs_info:*' unstagedstr '%B[U]%b'
 zstyle ':vcs_info:*' formats '[%b]%c%u'
 
+# Prompt
 set_prompt_update() {
-  #if [ $? -eq 0]; then
-    #echo "Yay"
-    #PROMPT="%{$fg[green]%}%B✔%b%{$fg[green]%}[%n|%*]%{$reset_color%}:%{$fg[blue]%}%B%~%b%{$reset_color%}\$ "
-  #else
-    #echo "Nay"
-    #PROMPT="%{$fg[red]%}%B✘%b%{$fg[green]%}[%n|%*]%{$reset_color%}:%{$fg[blue]%}%B%~%b%{$reset_color%}\$ "
-  #fi
   [[ $? == 0 ]] && PROMPT="%{$fg[green]%}%B✔%b%{$fg[green]%}[%n]%{$fg[yellow]%}[%*]%{$reset_color%}:%{$fg[blue]%}%B%~%b%{$reset_color%}\$ " || PROMPT="%{$fg[red]%}%B✘%b%{$fg[green]%}[%n]%{$fg[yellow]%}[%*]%{$reset_color%}:%{$fg[blue]%}%B%~%b%{$reset_color%}\$ "
 }
 RPROMPT="%{$fg[red]%}\$vcs_info_msg_0_  %{$fg[yellow]%}%B> [%i->%?]%b%{$reset_color%}"
-TMOUT=1
-
-TRAPWINCH() {
-  zle && { zle reset-prompt; zle -R }
-}
-
-TRAPALRM() {
-  if [ "$WIDGET" != "expand-or-complete" ]; then
-    zle reset-prompt
-  fi
-}
-
-typeset -a precmd_functions
-precmd_functions+=(set_prompt_update)
 
 # $PATH
 typeset -U path
@@ -74,6 +54,7 @@ ttyctl -f
 
 # Vi mode.
 bindkey -v
+bindkey "^R" history-incremental-pattern-search-backward
 
 # Function: undo latest cd.
 cdUndoKey() {
@@ -124,13 +105,13 @@ export EDITOR="nvim"
 setopt NO_FLOW_CONTROL
 
 # Aliases
+alias vim='nvim'
 alias tmux="TERM=screen-256color tmux"
 alias ls='ls --color'
 alias ll='ls -la --color'
 alias sl='ls --color'
 alias feh='feh -d'
-alias less='less -R'
-alias vim='sh ~/Vim/nvim-session/nvim.sh'
+#alias less='less -R'
 alias wcal="cal -y && when"
 alias go-bundle="~/go/bin/bundle"
 #alias start-rvm="source ~/.rvm/scripts/rvm"
@@ -139,43 +120,31 @@ alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias playmidi='fluidsynth -a alsa -m alsa_seq -l -i /usr/share/soundfonts/FluidR3_GM.sf2'
 alias scrot='scrot /tmp/%F-%X_\$wx\$h.png'
+alias maim='maim -s /tmp/$(date +%s).png | xclip -selection c -t image/png'
+alias maim_screen='/usr/bin/maim /tmp/$(date +%s).png'
+
+# kw
+alias kw='~/.config/kw/kw'
 
 alias spot-pp='playerctl -p spotify play-pause'
 alias spot-next='playerctl -p spotify next'
 alias spot-prev='playerctl -p spotify previous'
+alias spotify='/home/renatogeh/bin/spotify'
+
+# External brazilian keyboard
+alias switch-br-key='setxkbmap br abnt2'
+
+# Latexmk
+alias mklatex='latexmk -pdf -shell-escape -verbose -file-line-error -interaction=nonstopmode'
+alias cllatex='latexmk -C'
+
+# Browser
+#export BROWSER="chromium:$BROWSER"
 
 # Less syntax highlighting.
-export LESS=' -R -N'
-export LESSOPEN='|~/.lessfilter %s'
-export LESSCHARSET='utf-8'
-
-# Remap numpad keys.
-xmodmap ~/.Xmodmap
-
-# Go $GOPATH
-export GOPATH=~/go
-
-# Go added to $PATH
-export PATH="$PATH:$GOPATH/bin"
-
-# Prepending Cope to $PATH
-export PATH="/usr/share/perl5/vendor_perl/auto/share/dist/Cope:$PATH"
-
-# Ruby path.
-export RUBYPATH=`ruby -e 'puts Gem.user_dir'`
-export PATH="$PATH:$RUBYPATH/bin"
-alias rb-bundle="$RUBYPATH/bin/bundle"
-
-# Colored man pages
-#export PAGER="most"
-export LESS="--ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --window=-4 -R -N"
-[[ -f ~/.LESS_TERMCAP ]] && . ~/.LESS_TERMCAP
-
-# Syntax highlighting.
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# Suggestions
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+#export LESS=' -R -N'
+#export LESSOPEN='|~/.lessfilter %s'
+#export LESSCHARSET='utf-8'
 
 # Rehashes automatically.
 zstyle ':completion:*' rehash true
@@ -185,20 +154,8 @@ zstyle ':completion:*' rehash true
 autoload zkbd
 source ${ZDOTDIR:-$HOME}/.zkbd/xterm-256color-:0
 
-# Command not found.
-source /usr/share/doc/pkgfile/command-not-found.zsh
-
 # Allows background running.
 setopt NO_HUP
-
-# Command time format
-TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
-'avg shared (code):         %X KB'$'\n'\
-'avg unshared (data/stack): %D KB'$'\n'\
-'total (sum):               %K KB'$'\n'\
-'max memory:                %M MB'$'\n'\
-'page faults from disk:     %F'$'\n'\
-'other page faults:         %R'
 
 key[Insert]=${terminfo[kich1]}
 
@@ -214,6 +171,31 @@ key[Insert]=${terminfo[kich1]}
 [[ -n ${key[Down]} ]] && bindkey "${key[Down]}" down-line-or-search
 [[ -n ${key[Right]} ]] && bindkey "${key[Right]}" forward-char
 
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=10000
+bindkey -v
+SAVEHIST=10000
+setopt appendhistory
+# End of lines configured by zsh-newuser-install
+
+# Disable r as alias to !!
+disable r
+
+# Jump words
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+
+# Extended glob
+setopt extended_glob
+
+# Syntax highlighting.
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# zplug
+source ~/.zplug/init.zsh
+
 # Powerlevel9k
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(time context dir)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vi_mode vcs)
@@ -228,9 +210,6 @@ POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='white'
 #POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
 #POWERLEVEL9K_DIR_HOME_BACKGROUND='154'
 #POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='154'
-
-# zplug
-source ~/.zplug/init.zsh
 
 # Powerlevel9k
 zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
@@ -250,13 +229,3 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load
 
-# End of lines added by compinstall
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-bindkey -v
-# End of lines configured by zsh-newuser-install
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-#export PATH="$PATH:$HOME/.rvm/bin"

@@ -1,10 +1,13 @@
 " vim-plug
 
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
+
+" Disable LaTeX-Box for use with vim-tex.
+let g:polyglot_disabled = ['latex']
 
 call plug#begin('~/.config/nvim/plugged')
 " Add plugins manually here.
@@ -61,6 +64,18 @@ Plug 'sjl/gundo.vim'
 Plug 'tpope/vim-fugitive'
 " Git-Gutter
 Plug 'airblade/vim-gitgutter'
+" vim-markdown-preview (my own fixes)
+Plug 'RenatoGeh/vim-markdown-preview'
+" Stan Highlighting
+Plug 'eigenfoo/stan-vim'
+" Rust
+Plug 'rust-lang/rust.vim'
+" Automatic buffer length
+Plug 'tpope/vim-sleuth'
+" Julia
+Plug 'JuliaEditorSupport/julia-vim'
+" Julia ctags
+Plug 'JuliaEditorSupport/julia-ctags'
 
 call plug#end()
 
@@ -71,6 +86,8 @@ set expandtab
 
 " Auto refresh
 set autoread
+
+set nowrap
 
 "set termguicolors
 
@@ -319,6 +336,9 @@ let g:neomake_c_gcc_args = ['-Wextra', '-Wall']
 let g:neomake_cpp_enabled_makers = ['gcc']
 let g:neomake_cpp_gcc_args = ['-Wextra', '-Wall']
 
+" Python
+let g:neomake_python_enabled_makers = ['python']
+
 " LaTeX Live Preview
 let g:livepreview_previewer = 'zathura'
 
@@ -328,9 +348,6 @@ let g:neomake_go_enabled_makers = ['go']
 " Hard tabs on Makefiles.
 @neovim.autocmd FileType make setlocal noexpandtab
 @neovim.autocmd BufNewFile,BufRead Makefile setlocal noexpandtab
-
-" Disable LaTeX-Box for use with vim-tex.
-let g:polyglot_disabled = ['latex']
 
 " C++ completion
 au BufNewFile,BufRead,BufEnter *.cpp,*.hpp,*.cc,*.hh set omnifunc=omni#cpp#complete#Main
@@ -458,3 +475,16 @@ endfunction
 
 " Run :FixWhitespace to remove end of line white space
 command! -range=% FixWhitespace call <SID>FixWhitespace(<line1>,<line2>)
+
+" lvimrc blacklist
+let g:localvimrc_blacklist='/home/renatogeh/Documents/ta/mac0318/gym/.lvimrc'
+
+" vim-markdown-preview
+let g:vim_markdown_preview_toggle=2
+let g:vim_markdown_preview_browser='firefox'
+let g:vim_markdown_preview_pandoc=1
+let g:vim_markdown_preview_use_xdg_open=1
+
+" Rust
+let g:rustfmt_autosave = 1
+
