@@ -1,3 +1,13 @@
+# GRC colorizer
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 zstyle ':completion:*' completer _complete _ignored _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
@@ -25,6 +35,7 @@ autoload -Uz vcs_info
 precmd () { vcs_info }
 
 setopt histignorespace
+setopt HIST_IGNORE_SPACE
 
 # Git prompt.
 zstyle ':vcs_info:*' enable git
@@ -44,7 +55,11 @@ typeset -U path
 path=(~/bin $path[@])
 
 #xterm colors
-export TERM='screen-256color'
+export TERM='screen-256color-bce'
+#export TERM='xterm-direct'
+
+# Julia
+export JULIA_NUM_THREADS=8
 
 # Ignores history duplicates.
 setopt HIST_IGNORE_DUPS
@@ -99,14 +114,16 @@ bindkey '^[[Z' undo
 # Spell check commands!  (Sometimes annoying)
 setopt CORRECT
 
-export EDITOR="nvim"
+export EDITOR="/usr/bin/nvim"
+export VISUAL="/usr/bin/nvim"
 
 # Ctrl+S (flow control disable).
 setopt NO_FLOW_CONTROL
 
 # Aliases
 alias vim='nvim'
-alias tmux="TERM=screen-256color tmux"
+alias vimdiff='nvim -d'
+#alias tmux="TERM=$TERM tmux"
 alias ls='ls --color'
 alias ll='ls -la --color'
 alias sl='ls --color'
@@ -138,6 +155,17 @@ alias switch-br-key='setxkbmap br abnt2'
 alias mklatex='latexmk -pdf -shell-escape -verbose -file-line-error -interaction=nonstopmode'
 alias cllatex='latexmk -C'
 
+# Git
+function gvshow() {
+  mkdir -p /tmp/gvshow
+  if [ $? -ne 0 ]; then return 1; fi
+  t="$(mktemp -p /tmp/gvshow/).${1##*.}"
+  if [ $? -ne 0 ]; then return 2; fi
+  git show "$1" > "$t"
+  if [ $? -ne 0 ]; then return 3; fi
+  nvim -R "$t"
+}
+
 # Browser
 #export BROWSER="chromium:$BROWSER"
 
@@ -148,6 +176,14 @@ alias cllatex='latexmk -C'
 
 # Rehashes automatically.
 zstyle ':completion:*' rehash true
+
+TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
+'avg shared (code):         %X KB'$'\n'\
+'avg unshared (data/stack): %D KB'$'\n'\
+'total (sum):               %K KB'$'\n'\
+'max memory:                %M MB'$'\n'\
+'page faults from disk:     %F'$'\n'\
+'other page faults:         %R'
 
 # Corrects input
 
@@ -193,30 +229,33 @@ setopt extended_glob
 # Syntax highlighting.
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Autosuggestions.
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # zplug
 source ~/.zplug/init.zsh
 
 # Powerlevel9k
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(time context dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vi_mode vcs)
+#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(time context dir)
+#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vi_mode vcs)
 #POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 #POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-POWERLEVEL9K_TIME_FOREGROUND='black'
-POWERLEVEL9K_TIME_BACKGROUND='154'
-POWERLEVEL9K_DIR_HOME_FOREGROUND='white'
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='white'
-POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='white'
+#POWERLEVEL9K_TIME_FOREGROUND='black'
+#POWERLEVEL9K_TIME_BACKGROUND='154'
+#POWERLEVEL9K_DIR_HOME_FOREGROUND='white'
+#POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='white'
+#POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='white'
 #POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=" "
 #POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
 #POWERLEVEL9K_DIR_HOME_BACKGROUND='154'
 #POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='154'
 
 # Powerlevel9k
-zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+zplug "romkatv/powerlevel10k", as:theme, depth:1
 
 # calc.plugin.zsh
-zplug "arzzen/calc.plugin.zsh", use:calc.plugin.zsh
-alias ccalc=/usr/bin/calc
+#zplug "arzzen/calc.plugin.zsh", use:calc.plugin.zsh
+alias ccalc='/usr/bin/calc'
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check; then
@@ -229,3 +268,8 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load
 
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
+export PYTHONPATH="${PYTHONPATH}:/home/renatogeh/ta/mac0318/duckievillage/duckietown/src"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

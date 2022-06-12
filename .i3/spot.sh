@@ -1,10 +1,10 @@
 #!/bin/bash
 
-MAX_LEN=70
+MAX_LEN=100
 
 # Prints spotify track information.
 
-skipped=0
+#skipped=0
 
 s=$(playerctl -p spotify status)
 if [ "$s" == "Playing" ]; then
@@ -32,11 +32,12 @@ if [ "$s" == "Playing" ]; then
   fi
 
   if [ "$title" == "Advertisement" ] || [ "$title" == "Spotify" ]; then
-    if (( ctime % 2 == 0 )) && (( skipped == 0 )); then
-      /usr/local/bin/spot-next
-      let skipped=1
-    fi
-  else
-    let skipped=0
+    #if (( ctime % 2 == 0 )); then#&& (( skipped == 0 )); then
+      /home/renatogeh/bin/spot-next
+      #let skipped=1
+    #fi
   fi
+  #else
+    #let skipped=0
+  #fi
 fi

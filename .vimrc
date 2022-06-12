@@ -34,8 +34,6 @@ Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins' }
 Plug 'neomake/neomake'
 " Haxe syntax
 Plug 'jdonaldson/vaxe'
-" Startify
-Plug 'mhinz/vim-startify'
 " vim-cpp-enhanced-highlighting
 Plug 'octol/vim-cpp-enhanced-highlight'
 " C syntax highlighting
@@ -65,7 +63,7 @@ Plug 'tpope/vim-fugitive'
 " Git-Gutter
 Plug 'airblade/vim-gitgutter'
 " vim-markdown-preview (my own fixes)
-Plug 'RenatoGeh/vim-markdown-preview'
+"Plug 'RenatoGeh/vim-markdown-preview'
 " Stan Highlighting
 Plug 'eigenfoo/stan-vim'
 " Rust
@@ -76,6 +74,14 @@ Plug 'tpope/vim-sleuth'
 Plug 'JuliaEditorSupport/julia-vim'
 " Julia ctags
 Plug 'JuliaEditorSupport/julia-ctags'
+" Ayu colorscheme
+Plug 'ayu-theme/ayu-vim'
+" Rust
+Plug 'rust-lang/rust.vim'
+" Julia Formatter
+Plug 'kdheepak/JuliaFormatter.vim'
+" Clingo highlighting
+Plug 'rkaminsk/vim-syntax-clingo'
 
 call plug#end()
 
@@ -88,8 +94,6 @@ set expandtab
 set autoread
 
 set nowrap
-
-"set termguicolors
 
 " Airline stuff.
 let g:airline#extensions#tagbar#enabled = 1
@@ -134,12 +138,13 @@ set showmode
 " Neovim change
 "set t_Co=8
 
-"set termguicolors
+set termguicolors
 " colorscheme tango2
 " colorscheme wombat256mod
 " colorscheme cleanphp
 " colorscheme darkblue2
-colorscheme freya
+"colorscheme freya
+colorscheme ayu
 let g:colorscheme_switcher_define_mappings = 0
 "colorscheme tender
 
@@ -266,9 +271,10 @@ set wildmenu
 nnoremap <leader>u :GundoToggle<CR>
 
 " Persistent undos
-set noswapfile
-set nobackup
-set nowritebackup
+set backupdir=~/.vim/backup//
+set directory^=~/.vim/swap//
+set backup
+set writebackup
 if !&diff
   set undodir=~/.vim/undodir
   set undofile
@@ -381,9 +387,6 @@ let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_view_use_temp_files = 1
 
-" vim-tex disable warnings.
-let g:vimtex_quickfix_latexlog = {'default' : 0}
-
 " vim-tex shell escape.
 let g:vimtex_compiler_latexmk = {
       \ 'options' : [
@@ -423,14 +426,6 @@ endfunction
 command! -range VS call setpos('.', [0,<line1>,0,0]) |
                     \ exe "normal V" |
                     \ call setpos('.', [0,<line2>,0,0])
-
-" Startify + NERDTree
-autocmd VimEnter *
-                \   if !argc()
-                \ |   Startify
-                "\ |   NERDTree
-                \ |   wincmd w
-                \ | endif
 
 " Vim-go
 let g:go_highlight_extra_types = 1
@@ -488,3 +483,17 @@ let g:vim_markdown_preview_use_xdg_open=1
 " Rust
 let g:rustfmt_autosave = 1
 
+" Julia
+let g:latex_to_unicode_auto = 1
+let g:JuliaFormatter_options = {
+      \ 'indent' : 2,
+      \ 'margin' : 100,
+      \ }
+let g:JuliaFormatter_always_launch_server = 1
+" Normal mode mapping
+nnoremap <localleader>jf :JuliaFormatterFormat<CR>
+" Visual mode mapping
+vnoremap <localleader>jf :JuliaFormatterFormat<CR>
+
+nmap <localleader>ln :call search('Slide:')<CR>
+nmap <localleader>lp :call search('Slide:', 'b')<CR>

@@ -2,14 +2,14 @@
 ! urxvt
 
 !URxvt.perl-ext-common: default,tabbedex,clipboard
-URxvt.perl-ext-common: default,clipboard,url-select,keyboard-select
+URxvt.perl-ext-common: default,clipboard,url-select,keyboard-select,resize-font,52-osc
 
 ! tabbedex
 
 !URxvt.tabbed.autohide: true
 !URxvt.tabbed.reopen-on-close: yes
 
-URxvt*geometry:                115x40
+!URxvt*geometry:                115x40
 !URxvt*font: xft:Liberation Mono:pixelsize=14:antialias=false:hinting=true
 !URxvt*font: xft:Inconsolata:pixelsize=14:antialias=true:hinting=true
 !URxvt*boldFont: xft:Inconsolata:bold:pixelsize=14:antialias=false:hinting=true
@@ -17,12 +17,13 @@ URxvt*geometry:                115x40
 !URxvt*font: xft:DejaVu Sans Mono for Powerline:pixelsize=14:antialias=true:hinting=true
 !URxvt*boldFont: xft:DejaVu Sans Mono for Powerline:bold:pixelsize=14:antialias=false:hinting=true
 
-URxvt*font:-*-terminesspowerline-medium-r-normal-*-16-*-*-*-*-*-iso10646-*
-URxvt*boldFont:-*-terminesspowerline-bold-r-normal-*-16-*-*-*-*-*-iso10646-*
+!URxvt*font:-*-terminesspowerline-medium-r-normal-*-16-*-*-*-*-*-iso10646-*
+!URxvt*boldFont:-*-terminesspowerline-bold-r-normal-*-16-*-*-*-*-*-iso10646-*
 
 ! NOTE TO SELF: Must be multiple of 8 for some odd reason
-!URxvt*font:-*-terminesspowerline-medium-r-normal-*-32-*-*-*-*-*-iso10646-*
-!URxvt*boldFont:-*-terminesspowerline-bold-r-normal-*-32-*-*-*-*-*-iso10646-*
+URxvt*font:-*-terminesspowerline-medium-r-normal-*-14-*-*-*-*-*-iso10646-*
+URxvt*boldFont:-*-terminesspowerline-bold-r-normal-*-14-*-*-*-*-*-iso10646-*
+!URXvt*font:-*-noto sans-medium-r-*-*-14-*-*-*-*-*-*-*
 
 ! Tries to solve the underline issue with DejaVu 14 point.
 URxvt.lineSpace:    1
@@ -39,7 +40,7 @@ URxvt*.shading:     20
 !URxvt.modifier: super
 
 !! perl extensions
-URxvt.perl-ext:             default,url-select,clipboard
+URxvt.perl-ext:             default,url-select,clipboard,resize-font
 
 ! url-select (part of urxvt-perls package)
 URxvt.keysym.M-u:           perl:url-select:select_next
