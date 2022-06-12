@@ -88,6 +88,12 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+# Dunst
+bindsym Control+Shift+space exec "dunstctl close"
+bindsym Control+grave exec "dunstctl history-pop"
+bindsym Control+Shift+period exec "dunstctl context"
+bindsym Control+Shift+comma exec "dunstctl set-paused toggle"
+
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -152,7 +158,7 @@ new_window none
 hide_edge_borders both
 
 # Changes font.
-font pango:DejaVu Sans Mono 10
+font pango:DejaVu Sans Mono 8
 
 set $bg-color            #2f343f
 set $inactive-bg-color   #2f343f
@@ -166,9 +172,13 @@ bar {
   status_command i3blocks -c ~/.i3/i3blocks.conf
   tray_output primary
   #font pango:terminesspowerline 12
-  #font pango:Terminess Powerline Bold 10
-  font pango:-*-terminesspowerline-bold-r-normal-*-16-*-*-*-*-*-iso10646-* Bold 9
-  #font -*-terminesspowerline-bold-r-normal-*-16-*-*-*-*-*-iso10646-*
+  #font pango:Terminess Powerline Bold 7
+  font pango:-*-terminesspowerline-bold-r-*-*-12-*-*-*-*-*-*-* Bold 12px
+  #font -*-terminesspowerline-bold-r-normal-*-14-*-*-*-*-*-iso10646-*
+  #font pango:DejaVu Sans Bold 10px
+  #font pango: -*-roboto mono-bold-r-*-*-*-*-*-*-*-*-*-*- Bold 12px
+
+  workspace_min_width 0px
 
   colors {
     background $bg-color
@@ -184,13 +194,14 @@ bar {
 bindsym $mod+shift+x exec ~/.xlock/lock.sh --color "$bg-color"
 
 # Shotcuts for Spotify.
-bindsym $mod+j exec /usr/local/bin/spot-prev
-bindsym $mod+l exec /usr/local/bin/spot-next
-bindsym $mod+k exec /usr/local/bin/spot-pp
+bindsym $mod+j exec /home/renatogeh/bin/spot-prev
+bindsym $mod+l exec /home/renatogeh/bin/spot-next
+bindsym $mod+k exec /home/renatogeh/bin/spot-pp
 
 # Shortcut for screenshot.
 #bindsym $mod+p exec sleep 0.1 && scrot "/tmp/%F-%X_\$wx\$h.png" -s &> /tmp/error
-bindsym $mod+p exec maim -s /tmp/$(date +%s).png | xclip -selection c -t image/png
+bindsym $mod+p exec maim -u -s /tmp/$(date +%s).png | xclip -selection c -t image/png
+bindsym $mod+shift+p exec maim -u /tmp/$(date +%s).png | xclip -selection c -t image/png
 
 # Always runs terminal and chromium on startup and restart.
 # exec urxvt -e bash -c "tmux -q has-session && exec tmux attach-session -d || exec tmux new-session -n$USER -s$USER@$HOSTNAME"
@@ -206,6 +217,7 @@ exec --no-startup-id i3-msg 'workspace 2; exec firefox'
 # Run dialog
 # bindsym $mod+d exec rofi -show run -lines 10 -eh 2 -width 100 -padding 450 -opacity "95" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
 bindsym $mod+d exec rofi -run-command "/bin/zsh -i -c '{cmd}'" -show run -lines 30 -columns 3 -eh 1 -width 70 -opacity 95 -matching fuzzy
+bindsym $mod+shift+d exec rofi -run-command "/bin/zsh -i -c '{cmd}'" -show drun -lines 30 -columns 3 -eh 1 -width 70 -opacity 95 -matching fuzzy
 # Window switcher
 # bindsym $mod+Tab exec rofi -show window -lines 10 -eh 2 -width 100 -padding 450 -opacity "95" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
 bindsym $mod+Tab exec rofi -show window -lines 10 -eh 1 -width 50 -opacity "95" -matching fuzzy
@@ -226,11 +238,11 @@ workspace_auto_back_and_forth yes
 #exec i3-msg 'workspace 2:Sound; exec pavucontrol'
 
 # increase volume
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ unmute
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 2%+ unmute
 # increase bluetooth volume
 bindsym Shift+XF86AudioRaiseVolume exec pactl set-sink-volume bluez_sink.40_22_00_90_03_AD.a2dp_sink +2.5%
 # decrease volume
-bindsym XF86AudioLowerVolume exec amixer -q set Master 5%- unmute
+bindsym XF86AudioLowerVolume exec amixer -q set Master 2%- unmute
 # decrease bluetooth volume
 bindsym Shift+XF86AudioLowerVolume exec pactl set-sink-volume bluez_sink.40_22_00_90_03_AD.a2dp_sink -2.5%
 # mute volume
@@ -244,8 +256,8 @@ bindsym Shift+XF86AudioMute exec pactl set-sink-mute bluez_sink.40_22_00_90_03_A
 #bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 1 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 1 # decrease screen brightness
 
 # Touchpad controls
 bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
